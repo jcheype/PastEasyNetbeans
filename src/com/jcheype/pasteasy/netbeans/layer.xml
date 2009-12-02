@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Build">
+            <file name="com-jcheype-pasteasy-netbeans-PastEasySettings.instance"/>
+        </folder>
+        <folder name="Source">
+            <file name="com-jcheype-pasteasy-netbeans-PastEasyAction.instance"/>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Source">
+            <file name="com-jcheype-pasteasy-netbeans-PastEasyAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Source/com-jcheype-pasteasy-netbeans-PastEasyAction.instance"/>
+                <attr name="position" intvalue="200"/>
+            </file>
+        </folder>
+        <folder name="Tools">
+            <file name="com-jcheype-pasteasy-netbeans-PastEasySettings.shadow">
+                <attr name="originalFile" stringvalue="Actions/Build/com-jcheype-pasteasy-netbeans-PastEasySettings.instance"/>
+                <attr name="position" intvalue="0"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Shortcuts">
+        <file name="O-F3.shadow">
+            <attr name="originalFile" stringvalue="Actions/Source/com-jcheype-pasteasy-netbeans-PastEasyAction.instance"/>
+        </file>
+    </folder>
+</filesystem>

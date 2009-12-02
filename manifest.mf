@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: com.jcheype.pasteasy.netbeans
+OpenIDE-Module-Layer: com/jcheype/pasteasy/netbeans/layer.xml
+OpenIDE-Module-Localizing-Bundle: com/jcheype/pasteasy/netbeans/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
