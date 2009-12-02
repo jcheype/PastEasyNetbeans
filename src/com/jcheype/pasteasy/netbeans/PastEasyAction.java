@@ -75,7 +75,7 @@ public final class PastEasyAction extends CookieAction {
             StyledDocument doc = editorCookie.getDocument();
 
             String data = doc.getText(0, doc.getLength());
-            String url = Preferences.userRoot().get(PASTEASY_PREF, "http://paste.binnovatives.com/PastEasy");
+            String url = Preferences.userRoot().get(PASTEASY_PREF, "http://localhost:8080/");
             String msg = pasteCode("java", data, url);
             setClipboardContents(msg);
             int msgType = NotifyDescriptor.INFORMATION_MESSAGE;
