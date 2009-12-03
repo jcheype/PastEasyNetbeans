@@ -4,6 +4,7 @@
  */
 package com.jcheype.pasteasy.netbeans;
 
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.prefs.Preferences;
+import javax.swing.JEditorPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import org.omg.CORBA.DATA_CONVERSION;
@@ -29,13 +31,16 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 
 public final class PastEasyAction extends CookieAction {
+
     public static final String PASTEASY_PREF = "com.jcheype.pasteasy.url";
-    private String pasteCode(String language, String data, String urlString) {
+
+    private String pasteCode(String language, String data, int lineNumber, String urlString) {
         StringBuilder sb = new StringBuilder();
         try {
             // Construct data
             String buffer = URLEncoder.encode("language", "UTF-8") + "=" + URLEncoder.encode(language, "UTF-8");
             buffer += "&" + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8");
+            buffer += "&" + URLEncoder.encode("lineNumber", "UTF-8") + "=" + URLEncoder.encode("" + lineNumber, "UTF-8");
 
             // Send data
             URL url = new URL(urlString + "/add.do");
@@ -69,14 +74,37 @@ public final class PastEasyAction extends CookieAction {
         });
     }
 
+    public int getLineNumber(JEditorPane component, int pos) {
+        int posLine;
+        int y = 0;
+
+        try {
+            Rectangle caretCoords = component.modelToView(pos);
+            y = (int) caretCoords.getY();
+        } catch (BadLocationException ex) {
+        }
+
+        int lineHeight = component.getFontMetrics(component.getFont()).getHeight();
+        posLine = (y / lineHeight) + 1;
+        return posLine;
+    }
+
     protected void performAction(Node[] activatedNodes) {
         try {
             EditorCookie editorCookie = activatedNodes[0].getLookup().lookup(EditorCookie.class);
             StyledDocument doc = editorCookie.getDocument();
-
-            String data = doc.getText(0, doc.getLength());
+            JEditorPane[] panes = editorCookie.getOpenedPanes();
+            String data;
+            int lineNumber=1;
+            if (panes.length > 0 && panes[0].getSelectedText() != null && panes[0].getSelectedText().trim().length() > 0) {
+                 data = panes[0].getSelectedText();
+                 lineNumber = getLineNumber(panes[0], panes[0].getSelectionStart());
+            }
+            else{
+                data = doc.getText(0, doc.getLength());
+            }
             String url = Preferences.userRoot().get(PASTEASY_PREF, "http://localhost:8080/");
-            String msg = pasteCode("java", data, url);
+            String msg = pasteCode("java", data, lineNumber, url);
             setClipboardContents(msg);
             int msgType = NotifyDescriptor.INFORMATION_MESSAGE;
             NotifyDescriptor d = new NotifyDescriptor.Message(msg, msgType);
