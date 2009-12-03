@@ -20,7 +20,6 @@ import java.util.prefs.Preferences;
 import javax.swing.JEditorPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import org.omg.CORBA.DATA_CONVERSION;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.cookies.EditorCookie;
