@@ -93,6 +93,14 @@ public final class PastEasyAction extends CookieAction {
             EditorCookie editorCookie = activatedNodes[0].getLookup().lookup(EditorCookie.class);
             StyledDocument doc = editorCookie.getDocument();
             JEditorPane[] panes = editorCookie.getOpenedPanes();
+            String title  = (String) doc.getProperty(StyledDocument.TitleProperty);
+            String language = "java";
+            if(title != null){
+                int pos = title.lastIndexOf('.');
+                if(pos>0){
+                    language = title.substring(pos+1);
+                }
+            }
             String data;
             int lineNumber=1;
             if (panes.length > 0 && panes[0].getSelectedText() != null && panes[0].getSelectedText().trim().length() > 0) {
@@ -103,7 +111,7 @@ public final class PastEasyAction extends CookieAction {
                 data = doc.getText(0, doc.getLength());
             }
             String url = Preferences.userRoot().get(PASTEASY_PREF, "http://localhost:8080/");
-            String msg = pasteCode("java", data, lineNumber, url);
+            String msg = pasteCode(language, data, lineNumber, url);
             setClipboardContents(msg);
             int msgType = NotifyDescriptor.INFORMATION_MESSAGE;
             NotifyDescriptor d = new NotifyDescriptor.Message(msg, msgType);
